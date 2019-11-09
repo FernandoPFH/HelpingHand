@@ -1,0 +1,11 @@
+Docker:
+	ApiGateway:
+		-python:3.5.9-alpine3.10
+		-flask
+		-main.py
+
+	RabitMQ:
+		-rabbitmq:3.8.1-management-alpine
+
+	DataBase:
+		-mysql:8.0.18
