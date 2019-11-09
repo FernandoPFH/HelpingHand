@@ -1,0 +1,44 @@
+version: '1.0'
+services:
+	rabbitmq-server:
+		image: rabbitmq:3.8.1
+		hostname: "rabbitmq-server"
+		enviroment:
+			RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+			RABBITMQ_DEFAULT_USER: "guest"
+			RABBITMQ_DEFAULT_PASS: "guest"
+			RABBITMQ_DEFAULT_VHOST: "/"
+		ports:
+			- "15672:15672"
+			- "5672:5672"
+		labels:
+			NAME: "rabbitmq-server"
+
+	hhapigateway:
+		image: fernandopfh/hhapigateway:0.2dev
+		depends_on:
+			- rabbitmq-server
+		tty: true
+		ports:
+		- "5000:5000"
+
+	hhgetdb:
+		image: fernandopfh/hhgetdb:0.1dev
+		depends_on:
+			- rabbitmq-server
+		tty: true
+		volumes:
+			- "/home/fernando/Desktop/Documentos/Real/HelpingHand/DataBase:/"
+
+	hhsetdb:
+		image: fernandopfh/hhsetdb:dev
+		depends_on:
+			- rabbitmaq-server
+		tty: true
+		volumes:
+			- "/home/fernando/Desktop/Documentos/Real/HelpingHand/DataBase:/"
+
+
+volumes:
+	hhgetdb:
+	hhsetdb:

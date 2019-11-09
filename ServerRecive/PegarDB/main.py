@@ -1,16 +1,16 @@
 import pika
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq-server'))
 channel = connection.channel()
 channel.queue_declare(queue="receber")
 
 def on_request(ch, method, properties, body):
     try:
-        file = open("..\MexerDB\database.txt", "r")
+        file = open("./database.txt", "r")
     except:
-        file = open("..\MexerDB\database.txt", "x")
+        file = open("./database.txt", "x")
         file.close()
-        file = open("..\MexerDB\database.txt", "r")
+        file = open("./database.txt", "r")
     try:
         texto = file.read()
         if texto != "":
