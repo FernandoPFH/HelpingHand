@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 class MENSAGEM:
     def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq-server'))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq-server'))
         self.channel = self.connection.channel()
         result = self.channel.queue_declare(queue='', exclusive=True)
         self.callback_queue = result.method.queue
@@ -26,7 +26,7 @@ class MENSAGEM:
 
 
 def mandar(mensagem):
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq-server'))
     channel = connection.channel()
     channel.queue_declare(queue='mandar')
     channel.basic_publish(exchange='',routing_key='mandar',body=mensagem)
